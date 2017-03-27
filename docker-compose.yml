@@ -1,0 +1,10 @@
+version: "2"
+services:
+  testapplication:
+    build: .
+    environment:
+      - INSPECTIT_CMR_ADDR=172.17.0.1
+      - INSPECTIT_CMR_PORT=9070
+      - WORKER_SLEEP=500
+      - NUMBER_OF_WORKERS=2
+      - DEPTH=100

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration-interface-import-data xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <profiles>
+        <profile common="false" active="true" default="false" id="f1d59e03-cdb1-4a0f-a57e-97d4186fc521" name="TestApplication" created-on="2017-03-27T16:04:58.555+02:00" updated-on="2017-03-27T16:50:45.937+02:00" revision="8" schemaVersion="2">
+            <sensor-assignment-profile-data>
+                <timer-method-sensor-assignment starts-invocation="false" min-invocation-duration="0" charting="false" sensor-config-class="rocks.inspectit.shared.cs.ci.sensor.method.impl.TimerSensorConfig" method-name="*" constructor="false" public-mod="true" protected-mod="true" private-mod="true" default-mod="true" class-name="rockss.inspectit.*" superclass="false" interface="false"/>
+                <timer-method-sensor-assignment starts-invocation="true" min-invocation-duration="0" charting="false" sensor-config-class="rocks.inspectit.shared.cs.ci.sensor.method.impl.TimerSensorConfig" method-name="executeTasks" constructor="false" public-mod="true" protected-mod="true" private-mod="true" default-mod="true" class-name="rockss.inspectit.controller.*" superclass="false" interface="false"/>
+            </sensor-assignment-profile-data>
+        </profile>
+    </profiles>
+    <environments>
+        <environment id="8b0b7e27-ea73-4546-b3fb-0911dd389778" name="Default Environment" description="Environment that contains the default inspectIT monitoring settings and all default profiles." created-on="2017-03-27T15:46:48.418+02:00" updated-on="2017-03-27T16:09:25.368+02:00" revision="4" schemaVersion="2">
+            <time-sending-strategy-config time="5000"/>
+            <simple-buffer-strategy-config/>
+            <platform-sensor-configs>
+                <class-loading-sensor-config active="true"/>
+                <compilation-sensor-config active="true"/>
+                <cpu-sensor-config active="true"/>
+                <memory-sensor-config active="true"/>
+                <runtime-sensor-config active="true"/>
+                <system-sensor-config active="true"/>
+                <thread-sensor-config active="true"/>
+            </platform-sensor-configs>
+            <method-sensor-configs>
+                <connection-sensor-config/>
+                <http-sensor-config sessionCapture="false" string-length="500"/>
+                <invocation-sequence-sensor-config string-length="0"/>
+                <prepared-statement-parameter-sensor-config/>
+                <prepared-statement-sensor-config string-length="1000"/>
+                <statement-sensor-config string-length="1000"/>
+                <timer-sensor-config string-length="100"/>
+                <log4j-logging-sensor-config minLevel="WARN"/>
+            </method-sensor-configs>
+            <exception-sensor-config enhanced="false" string-length="500"/>
+            <jmx-loading-sensor-config active="true" forceMBeanServerCreation="false"/>
+            <profile-ids>
+                <profile-id>ejb_v2</profile-id>
+                <profile-id>hibernate</profile-id>
+                <profile-id>ejb_v3</profile-id>
+                <profile-id>websockets</profile-id>
+                <profile-id>exclude-classes</profile-id>
+                <profile-id>trinidad</profile-id>
+                <profile-id>jpa</profile-id>
+                <profile-id>struts</profile-id>
+                <profile-id>jta</profile-id>
+                <profile-id>sql</profile-id>
+                <profile-id>logging-log4j</profile-id>
+                <profile-id>sql-parameters</profile-id>
+                <profile-id>http</profile-id>
+                <profile-id>webservice</profile-id>
+                <profile-id>f1d59e03-cdb1-4a0f-a57e-97d4186fc521</profile-id>
+                <profile-id>jsf</profile-id>
+            </profile-ids>
+            <classLoadingDelegation>true</classLoadingDelegation>
+        </environment>
+    </environments>
+</configuration-interface-import-data>
