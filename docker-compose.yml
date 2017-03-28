@@ -5,6 +5,9 @@ services:
     environment:
       - INSPECTIT_CMR_ADDR=172.17.0.1
       - INSPECTIT_CMR_PORT=9070
-      - WORKER_SLEEP=500
+      - WORKER_RATE=500
       - NUMBER_OF_WORKERS=2
       - DEPTH=100
+      - INFLUX_URL=localhost:8086
+      - INFLUX_USER=influx
+      - INFLUX_PASSWORD=password

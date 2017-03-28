@@ -1,6 +1,7 @@
 package rockss.inspectit.controller;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicLong;
 
 import rockss.inspectit.computations.IRecursiveTask;
 
@@ -8,6 +9,8 @@ public class TaskExecutionWorker extends Thread {
 
 	private TaskRegistry taskRegistry;
 	private int workerSleep;
+
+	private static AtomicLong executeCounter = new AtomicLong();
 
 	public TaskExecutionWorker(TaskRegistry taskRegistry) {
 		this.taskRegistry = taskRegistry;
@@ -33,6 +36,8 @@ public class TaskExecutionWorker extends Thread {
 			}
 
 			executeTasks();
+
+			executeCounter.incrementAndGet();
 			try {
 				Thread.sleep(workerSleep);
 			} catch (InterruptedException e) {
@@ -41,4 +46,9 @@ public class TaskExecutionWorker extends Thread {
 			}
 		}
 	}
+
+	public static AtomicLong getExecuteCounter() {
+		return executeCounter;
+	}
+
 }

@@ -24,7 +24,7 @@ public class WorkerManager {
 			worker.start();
 			System.out.println("Worker thread started");
 			try {
-				Thread.sleep(Integer.parseInt(System.getProperty("workerSleep", "500")) / numberOfWorkers);
+				Thread.sleep(1000 / Integer.parseInt(System.getProperty("workerRate", "100")) * numberOfWorkers);
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
