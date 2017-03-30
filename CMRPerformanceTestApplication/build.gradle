@@ -30,6 +30,9 @@ dependencies {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
+    
+    compile("org.influxdb:influxdb-java:2.5")
+    
     // end::jetty[]
     // tag::actuator[]
     // end::actuator[]
