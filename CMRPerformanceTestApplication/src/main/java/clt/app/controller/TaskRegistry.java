@@ -1,10 +1,10 @@
-package rocks.inspectit.clt.app.controller;
+package clt.app.controller;
 
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 
-import rocks.inspectit.clt.app.computations.IRecursiveTask;
+import clt.app.computations.IRecursiveTask;
 
 @Component
 public class TaskRegistry {

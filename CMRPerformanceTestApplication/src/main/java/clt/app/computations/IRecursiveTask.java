@@ -1,4 +1,4 @@
-package rocks.inspectit.clt.app.computations;
+package clt.app.computations;
 
 public interface IRecursiveTask {
 

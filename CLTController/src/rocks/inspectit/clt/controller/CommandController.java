@@ -21,7 +21,8 @@ public class CommandController {
 	private CLTController cltController;
 
 	@RequestMapping("/load")
-	public String loadCommand(@RequestParam(value = "count", defaultValue = "10") int count, @RequestParam(value = "rate", defaultValue = "1") int rate) {
+	public String loadCommand(@RequestParam(value = "count", defaultValue = "10") int count, @RequestParam(value = "rate", defaultValue = "1") int rate,
+			@RequestParam(value = "depth", defaultValue = "10") int depth) {
 		System.out.println("Received load command. count: " + count + ", rate: " + rate);
 
 		List<Socket> socketList = cltController.getSocketList();
@@ -30,14 +31,15 @@ public class CommandController {
 			ObjectOutputStream oos = getObjectOutputStream(socket);
 			if (oos != null) {
 				try {
-					oos.writeObject(new int[] { 0, count, rate });
+					oos.writeObject(new Object[] { 0, count, rate, depth });
+					oos.flush();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 
-		return "{\"command\": \"load\", \"count\": " + count + ", \"rate\": " + rate + "}";
+		return "{\"command\": \"load\", \"count\": " + count + ", \"rate\": " + rate + ", \"depth\": " + depth + "}";
 	}
 
 	private ObjectOutputStream getObjectOutputStream(Socket socket) {

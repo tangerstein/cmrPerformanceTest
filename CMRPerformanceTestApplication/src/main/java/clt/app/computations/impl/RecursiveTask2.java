@@ -1,15 +1,16 @@
-package rocks.inspectit.clt.app.computations.impl;
+package clt.app.computations.impl;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import rocks.inspectit.clt.app.computations.IRecursiveTask;
-import rocks.inspectit.clt.app.controller.TaskRegistry;
+import clt.app.computations.IRecursiveTask;
+import clt.app.controller.TaskRegistry;
 
 @Component
-public class RecursiveTask1 implements IRecursiveTask {
+public class RecursiveTask2 implements IRecursiveTask {
+
 	private long depth;
 
 	@Autowired
@@ -19,7 +20,7 @@ public class RecursiveTask1 implements IRecursiveTask {
 		if (numberOfRuns >= depth) {
 			return n;
 		} else {
-			return recursiveMethod(n * 5, numberOfRuns + 1);
+			return recursiveMethod(n - 1, numberOfRuns + 1);
 		}
 	}
 

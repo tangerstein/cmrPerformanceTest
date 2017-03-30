@@ -1,12 +1,12 @@
-package rocks.inspectit.clt.app.computations.impl;
+package clt.app.computations.impl;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import rocks.inspectit.clt.app.computations.IRecursiveTask;
-import rocks.inspectit.clt.app.controller.TaskRegistry;
+import clt.app.computations.IRecursiveTask;
+import clt.app.controller.TaskRegistry;
 
 @Component
 public class RecursiveTask3 implements IRecursiveTask {

@@ -1,7 +1,7 @@
 /**
- * 
+ *
  */
-package rocks.inspectit.clt.app.controller;
+package clt.app.controller;
 
 import java.util.UUID;
 import java.util.concurrent.Executors;
@@ -13,7 +13,6 @@ import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Point.Builder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,8 +21,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class InfluxController implements Runnable {
-	@Autowired
-	PropertyProvider propertyProvider;
 	/**
 	 * Influx access data
 	 */
@@ -34,22 +31,21 @@ public class InfluxController implements Runnable {
 
 	private InfluxDB influxDB;
 
+	@Override
 	public void run() {
 		try {
-			Builder builder = Point.measurement("agent_statistics").tag("agent_uuid", ID)
-				.addField("count", TaskExecutionWorker.getExecuteCounter().getAndSet(0));
-		influxDB.write("inspectit", "autogen", builder.build());
+			Builder builder = Point.measurement("agent_statistics").tag("agent_uuid", ID).addField("count", TaskExecutionWorker.getExecuteCounter().getAndSet(0));
+			influxDB.write("inspectit", "autogen", builder.build());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@PostConstruct
-	public void startController(){
-		influxUrl = "http://" + propertyProvider.getProperties().getProperty("INFLUX_URL")
-				+ ":" + propertyProvider.getProperties().getProperty("INFLUX_PORT");
-		influxUser = propertyProvider.getProperties().getProperty("INFLUX_USER");
-		influxPassword = propertyProvider.getProperties().getProperty("INFLUX_PASSWORD");
+	public void startController() {
+		influxUrl = "http://" + System.getProperty("INFLUX_URL") + ":" + System.getProperty("INFLUX_PORT");
+		influxUser = System.getProperty("INFLUX_USER");
+		influxPassword = System.getProperty("INFLUX_PASSWORD");
 		influxDB = InfluxDBFactory.connect(influxUrl, influxUser, influxPassword);
 
 		Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(this, 5, 5, TimeUnit.SECONDS);
