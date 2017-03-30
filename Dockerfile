@@ -1,4 +1,4 @@
-FROM java:8
+FROM java:8-jre-alpine
 MAINTAINER info.inspectit@novatec-gmbh.de
 ENV INSPECTIT_CMR_ADDR localhost
 ENV INSPECTIT_CMR_PORT 9070
