@@ -30,11 +30,11 @@ public class CommandController {
 		while (iterator.hasNext()) {
 			ObjectOutputStream oos = iterator.next();
 			try {
-				receiverCount++;
 				oos.writeObject(new Object[] { 0, count, rate, depth });
 				oos.flush();
+				receiverCount++;
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("connection removed..");
 				iterator.remove();
 			}
 		}
