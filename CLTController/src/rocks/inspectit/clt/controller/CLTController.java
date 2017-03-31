@@ -1,5 +1,6 @@
 package rocks.inspectit.clt.controller;
 
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -21,9 +22,9 @@ public class CLTController {
 
 	private static final int portNumber = 9080;
 
-	private List<Socket> socketList = new ArrayList<>();
-
 	private ExecutorService executor = Executors.newSingleThreadExecutor();
+
+	private List<ObjectOutputStream> objectOutputStreams = new ArrayList<>();
 
 	/**
 	 * @param args
@@ -45,7 +46,7 @@ public class CLTController {
 						Socket clientSocket = serverSocket.accept();
 
 						System.out.println("Connection accepted.");
-						socketList.add(clientSocket);
+						objectOutputStreams.add(new ObjectOutputStream(clientSocket.getOutputStream()));
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,11 +56,11 @@ public class CLTController {
 	}
 
 	/**
-	 * Gets {@link #socketList}.
+	 * Gets {@link #objectOutputStreams}.
 	 *
-	 * @return {@link #socketList}
+	 * @return {@link #objectOutputStreams}
 	 */
-	public List<Socket> getSocketList() {
-		return this.socketList;
+	public List<ObjectOutputStream> getObjectOutputStreams() {
+		return this.objectOutputStreams;
 	}
 }

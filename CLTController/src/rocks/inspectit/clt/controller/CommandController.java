@@ -1,9 +1,7 @@
 package rocks.inspectit.clt.controller;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.List;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,31 +23,24 @@ public class CommandController {
 			@RequestParam(value = "depth", defaultValue = "10") int depth) {
 		System.out.println("Received load command. count: " + count + ", rate: " + rate);
 
-		List<Socket> socketList = cltController.getSocketList();
+		Iterator<ObjectOutputStream> iterator = cltController.getObjectOutputStreams().iterator();
 
-		for (Socket socket : socketList) {
-			ObjectOutputStream oos = getObjectOutputStream(socket);
-			if (oos != null) {
-				try {
-					oos.writeObject(new Object[] { 0, count, rate, depth });
-					oos.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		int receiverCount = 0;
 
-		return "{\"command\": \"load\", \"count\": " + count + ", \"rate\": " + rate + ", \"depth\": " + depth + "}";
-	}
-
-	private ObjectOutputStream getObjectOutputStream(Socket socket) {
-		if (!socket.isClosed()) {
+		while (iterator.hasNext()) {
+			ObjectOutputStream oos = iterator.next();
 			try {
-				return new ObjectOutputStream(socket.getOutputStream());
-			} catch (IOException e) {
-				return null;
+				receiverCount++;
+				oos.writeObject(new Object[] { 0, count, rate, depth });
+				oos.flush();
+			} catch (Exception e) {
+				e.printStackTrace();
+				iterator.remove();
 			}
 		}
-		return null;
+
+		System.out.println("receivre_count: " + receiverCount);
+
+		return "{\"command\": \"load\", \"count\": " + count + ", \"rate\": " + rate + ", \"depth\": " + depth + ", \"receiver_count\": " + receiverCount + "}";
 	}
 }

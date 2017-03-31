@@ -7,19 +7,15 @@ import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.PostConstruct;
-
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Point.Builder;
-import org.springframework.stereotype.Component;
 
 /**
  * @author tan
  *
  */
-@Component
 public class InfluxController implements Runnable {
 	/**
 	 * Influx access data
@@ -41,8 +37,7 @@ public class InfluxController implements Runnable {
 		}
 	}
 
-	@PostConstruct
-	public void startController() {
+	public void start() {
 		influxUrl = "http://" + System.getProperty("INFLUX_URL") + ":" + System.getProperty("INFLUX_PORT");
 		influxUser = System.getProperty("INFLUX_USER");
 		influxPassword = System.getProperty("INFLUX_PASSWORD");
@@ -50,5 +45,4 @@ public class InfluxController implements Runnable {
 
 		Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(this, 5, 5, TimeUnit.SECONDS);
 	}
-
 }
