@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import clt.app.computations.IRecursiveTask;
 
-public class TaskExecutionWorker extends Thread {
+public class TaskExecutionWorker {
 
 	private TaskRegistry taskRegistry;
 

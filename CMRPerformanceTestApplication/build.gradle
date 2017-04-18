@@ -13,7 +13,7 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 jar {
-    baseName = 'gs-spring-boot'
+    baseName = 'clt-app'
     version =  '0.1.0'
 }
 
@@ -26,11 +26,7 @@ targetCompatibility = 1.8
 
 dependencies {
     // tag::jetty[]
-    compile("org.springframework.boot:spring-boot-starter-web") {
-        exclude module: "spring-boot-starter-tomcat"
-    }
-    compile("org.springframework.boot:spring-boot-starter-jetty")
-    
+    compile("org.springframework.boot:spring-boot-starter") 
     compile("org.influxdb:influxdb-java:2.5")
     
     // end::jetty[]

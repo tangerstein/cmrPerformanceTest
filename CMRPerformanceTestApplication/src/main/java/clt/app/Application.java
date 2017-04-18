@@ -1,7 +1,5 @@
 package clt.app;
 
-import java.io.ObjectInputStream;
-import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -11,12 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import clt.app.controller.InfluxController;
 import clt.app.controller.TaskExecutionWorker;
 import clt.app.controller.TaskRegistry;
 
 @SpringBootApplication
-public class Application extends Thread {
+public class Application implements Runnable {
 
 	@Autowired
 	private TaskRegistry taskRegistry;
@@ -29,7 +26,7 @@ public class Application extends Thread {
 
 	@PostConstruct
 	public void controllerConnection() throws Exception {
-		start();
+		executor.execute(this);
 	}
 
 	/**
@@ -37,37 +34,49 @@ public class Application extends Thread {
 	 */
 	@Override
 	public void run() {
-		try {
-			String controllerHost = System.getProperty("CONTROLLER_HOST");
-			String controllerPort = System.getProperty("CONTROLLER_PORT");
 
-			System.out.println(String.format("Connecting to %s:%s..", controllerHost, controllerPort));
+		TaskExecutionWorker worker = new TaskExecutionWorker(taskRegistry, 10);
 
-			new InfluxController().start();
+		while (true) {
+			worker.executeTasks();
 
-			try (Socket socket = new Socket(controllerHost, Integer.parseInt(controllerPort))) {
-				try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
-
-					while (true) {
-						Object[] input = (Object[]) ois.readObject();
-
-						int cmdId = (int) input[0];
-
-						if (cmdId == 0) {
-							executor.execute(new Runnable() {
-								@Override
-								public void run() {
-									load(input);
-								}
-							});
-						}
-					}
-				}
+			try {
+				Thread.sleep(1, 0);
+			} catch (InterruptedException e) {
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
 		}
+		// try {
+		// String controllerHost = System.getProperty("CONTROLLER_HOST");
+		// String controllerPort = System.getProperty("CONTROLLER_PORT");
+		//
+		// System.out.println(String.format("Connecting to %s:%s..", controllerHost,
+		// controllerPort));
+		//
+		// new InfluxController().start();
+		//
+		// try (Socket socket = new Socket(controllerHost, Integer.parseInt(controllerPort))) {
+		// try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
+		//
+		// while (true) {
+		// Object[] input = (Object[]) ois.readObject();
+		//
+		// int cmdId = (int) input[0];
+		//
+		// if (cmdId == 0) {
+		// executor.execute(new Runnable() {
+		// @Override
+		// public void run() {
+		// load(input);
+		// }
+		// });
+		// }
+		// }
+		// }
+		// }
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// System.exit(1);
+		// }
 	}
 
 	/**
