@@ -17,6 +17,12 @@ public class RecursiveTask2 implements IRecursiveTask {
 	private TaskRegistry taskManager;
 
 	public long recursiveMethod(long n, long numberOfRuns) {
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (numberOfRuns >= depth) {
 			return n;
 		} else {

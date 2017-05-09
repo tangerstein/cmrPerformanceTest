@@ -17,6 +17,12 @@ public class RecursiveTask1 implements IRecursiveTask {
 
 	public long recursiveMethod(long n, long numberOfRuns) {
 		if (numberOfRuns >= depth) {
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return n;
 		} else {
 			return recursiveMethod(n * 5, numberOfRuns + 1);
