@@ -28,6 +28,7 @@ dependencies {
     // tag::jetty[]
     compile("org.springframework.boot:spring-boot-starter") 
     compile("org.influxdb:influxdb-java:2.5")
+    compile("org.eclipse.jetty:jetty-util:9.2.2.v20140723")
     
     // end::jetty[]
     // tag::actuator[]

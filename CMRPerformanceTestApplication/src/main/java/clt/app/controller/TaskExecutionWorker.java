@@ -1,37 +1,50 @@
 package clt.app.controller;
 
-import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 
-import clt.app.computations.IRecursiveTask;
+import org.eclipse.jetty.util.ConcurrentHashSet;
 
-public class TaskExecutionWorker {
+import clt.app.computations.ITask;
+
+public class TaskExecutionWorker implements Runnable {
 
 	private TaskRegistry taskRegistry;
-
-	public int depth;
 
 	private static AtomicLong executeCounter = new AtomicLong();
 
 	public long result;
 
-	public TaskExecutionWorker(TaskRegistry taskRegistry, int depth) {
+	public TaskExecutionWorker(TaskRegistry taskRegistry) {
 		this.taskRegistry = taskRegistry;
-		this.depth = depth;
 	}
 
 	public void executeTasks() {
 		executeCounter.incrementAndGet();
 
 		result = 0;
-		ArrayList<IRecursiveTask> tasks = taskRegistry.getTasks();
-		for (IRecursiveTask task : tasks) {
-			task.setDepth(depth);
-			result += task.recursiveMethod(1, 1);
+		ConcurrentHashSet<ITask> tasks = taskRegistry.getTasks();
+		for (ITask task : tasks) {
+			task.setDepth(ThreadLocalRandom.current().nextInt(100, 2000 + 1));
+			result += task.execute(1, ThreadLocalRandom.current().nextInt(100, 2000 + 1));
 		}
 	}
 
 	public static AtomicLong getExecuteCounter() {
 		return executeCounter;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			executeTasks();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 }
