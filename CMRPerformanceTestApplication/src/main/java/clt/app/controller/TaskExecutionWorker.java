@@ -25,8 +25,8 @@ public class TaskExecutionWorker implements Runnable {
 		result = 0;
 		ConcurrentHashSet<ITask> tasks = taskRegistry.getTasks();
 		for (ITask task : tasks) {
-			task.setDepth(ThreadLocalRandom.current().nextInt(100, 2000 + 1));
-			result += task.execute(1, ThreadLocalRandom.current().nextInt(100, 2000 + 1));
+			task.setDepth(ThreadLocalRandom.current().nextInt(10, 100 + 1));
+			result += task.execute(1, ThreadLocalRandom.current().nextInt(10, 100 + 1));
 		}
 	}
 
